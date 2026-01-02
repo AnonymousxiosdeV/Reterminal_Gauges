@@ -90,7 +90,8 @@ class MainWindow(QWidget):
         right_col = QVBoxLayout()
         right_col.addWidget(self.disk_canvas)
         right_col.addStretch()
-        right_col.addWidget(self.status_label, alignment=0x0004)  # bottom right
+        right_col.addWidget(self.status_label, alignment=Qt.AlignBottom | Qt.AlignRight)
+ # self.status_label.setAlignment(Qt.AlignRight)  # aligns the text itself to the right
         right_widget = QWidget(); right_widget.setLayout(right_col)
 
         main_layout.addWidget(left_widget)
@@ -103,7 +104,7 @@ class MainWindow(QWidget):
         self.ram_history = []
         self.last_net_io = psutil.net_io_counters()
         self.last_net_time = time.time()
-        self.boot_time = time.time()
+        self.boot_time = psutil.boot_time()  # actual system boot time
 
         self.timer = QTimer(self)
         self.timer.timeout.connect(self.update_plots)
